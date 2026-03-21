@@ -137,3 +137,9 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Netlify (local CLI / linked site metadata — do not commit)
+.netlify/
+
+# OS
+.DS_Store
