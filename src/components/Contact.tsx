@@ -130,7 +130,7 @@ export function Contact() {
               {pending ? "Sending…" : "Send message"}
             </button>
             <p className="contact-form__hint">
-              Submissions are delivered through Netlify. You can also use the email button on the
+              We usually reply within two business days. You can also use the email button on the
               left.
             </p>
           </form>
