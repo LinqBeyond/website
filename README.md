@@ -65,8 +65,11 @@ Optional: use the [Netlify CLI](https://docs.netlify.com/cli/get-started/) (`net
 
 ### Contact form (Netlify Forms)
 
-- A hidden **`contact`** form in **`index.html`** is required so Netlify can detect fields at build time. The visible form lives in React (`src/components/Contact.tsx`) and posts `application/x-www-form-urlencoded` data to `/`, matching Netlify’s [JavaScript forms](https://docs.netlify.com/forms/setup/) flow.
-- After the first successful deploy, open **Site configuration → Forms** and confirm the **contact** form appears.
+Netlify only registers forms if **automatic form detection** is turned on for the site. In the Netlify UI go to **Forms**, then choose **Enable form detection** (see [Automatic form detection](https://docs.netlify.com/forms/setup/#automatic-form-detection)). After that, **redeploy** so the build output is scanned again.
+
+- A hidden **`contact`** form in **`index.html`** uses the **`netlify`** attribute (same as the docs) plus **`netlify-honeypot="bot-field"`**. That HTML must ship in **`dist/index.html`** after `npm run build` so the deploy parser can see every field **`name`** that React will submit.
+- The visible form is in React (`src/components/Contact.tsx`) and posts with `fetch` to `/` as `application/x-www-form-urlencoded`, matching [Submit JavaScript-rendered forms with AJAX](https://docs.netlify.com/forms/setup/#submit-javascript-rendered-forms-with-ajax).
+- After a deploy with detection enabled, open **Site configuration → Forms** and confirm the **contact** form is listed.
 - Configure **notifications** (e.g. email) so submissions reach the right inbox. Spam filtering can include the built-in honeypot field; add reCAPTCHA in the Netlify UI if you need more protection.
 
 ### SPA routing

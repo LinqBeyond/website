@@ -17,14 +17,8 @@
     />
   </head>
   <body>
-    <!-- Netlify discovers forms at build time; the live form is rendered by React. -->
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
-      hidden
-    >
+    <!-- Netlify parses this at deploy (see Forms docs: netlify attribute on <form>). React renders the real UI. -->
+    <form name="contact" method="POST" netlify netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="business" />
