@@ -4,11 +4,13 @@ import { Services } from "./components/Services";
 import { Process } from "./components/Process";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { ScrollToTop } from "./components/ScrollToTop";
 import "./App.css";
 
 export default function App() {
   return (
     <>
+      <ScrollToTop />
       <Header />
       <main>
         <Hero />

@@ -1,29 +1,18 @@
 # LynQ BEYOND — marketing site
 
-Static React (Vite) single-page site for **Lynq Beyond LLC**.
+Single-page marketing site for **Lynq Beyond LLC**, built with **React**, **TypeScript**, and **Vite**. It is configured for deployment on **Netlify**.
 
-## Install Node.js and npm
+## Requirements
 
-**npm** ships with **Node.js**. You only install Node once; `npm` and `npx` come with it.
+- **Node.js** (LTS recommended) — includes **npm**.
 
 ### macOS (pick one)
 
-1. **Installer (simplest)**  
-   Download the **LTS** build from [https://nodejs.org](https://nodejs.org), run the installer, then restart the terminal.
+1. **Installer (simplest)** — Download the LTS build from [nodejs.org](https://nodejs.org), run the installer, then restart the terminal.
+2. **Homebrew** — `brew install node` ([Homebrew](https://brew.sh)).
+3. **nvm** — Follow [nvm setup](https://github.com/nvm-sh/nvm#installing-and-updating), then `nvm install --lts` and `nvm use --lts`.
 
-2. **Homebrew** (if you use [Homebrew](https://brew.sh))  
-   ```bash
-   brew install node
-   ```
-
-3. **nvm** (multiple Node versions)  
-   Follow [nvm setup](https://github.com/nvm-sh/nvm#installing-and-updating), then:
-   ```bash
-   nvm install --lts
-   nvm use --lts
-   ```
-
-Check that it worked:
+Verify:
 
 ```bash
 node -v
@@ -32,31 +21,69 @@ npm -v
 
 ## Local development
 
+Install dependencies once:
+
 ```bash
 npm install
+```
+
+Start the Vite dev server (hot reload):
+
+```bash
 npm run dev
 ```
+
+Open the URL shown in the terminal (usually **http://localhost:5173/**). The app must be served by Vite; **do not** open `index.html` directly from the filesystem (`file://`), because the browser cannot load `/src/main.tsx` that way.
+
+**Note:** The contact form submits to **Netlify Forms** via `POST /`. That only works on a **deployed Netlify URL** (or `netlify dev`). While using `npm run dev` alone, use the **Email us** button to reach the inbox, or test the form after a deploy or deploy preview.
 
 ## Production build
 
 ```bash
 npm run build
+```
+
+Optimized output is written to **`dist/`**.
+
+Preview the production bundle locally:
+
+```bash
 npm run preview
 ```
 
-Output is written to `dist/`.
+Use the URL Vite prints (often **http://localhost:4173/**). Unlike `npm run dev`, **`npm run preview` does not watch files** — run `npm run build` again after changes, then restart preview if needed.
 
 ## Deploy on Netlify
 
-1. Push this repo to GitHub (or GitLab / Bitbucket).
-2. In [Netlify](https://www.netlify.com/), choose **Add new site → Import an existing project** and connect the repo.
-3. Netlify will detect settings from `netlify.toml`:
+1. Connect this repository in the Netlify UI (**Add new site → Import an existing project**).
+2. Build settings are read from **`netlify.toml`**:
    - **Build command:** `npm run build`
    - **Publish directory:** `dist`
-4. Deploy. Future pushes to your main branch trigger new builds automatically.
+3. Deploy. Pushes to the linked branch trigger new builds.
 
-Optional: install the [Netlify CLI](https://docs.netlify.com/cli/get-started/) locally and run `netlify dev` or `netlify deploy` for previews; the `.netlify/` folder is gitignored.
+Optional: use the [Netlify CLI](https://docs.netlify.com/cli/get-started/) (`netlify dev`, `netlify deploy --prod`). The `.netlify/` directory is gitignored.
 
-## Brand
+### Contact form (Netlify Forms)
 
-Brand reference: `LinqBeyondBrand.pdf` in this repository.
+- A hidden **`contact`** form in **`index.html`** is required so Netlify can detect fields at build time. The visible form lives in React (`src/components/Contact.tsx`) and posts `application/x-www-form-urlencoded` data to `/`, matching Netlify’s [JavaScript forms](https://docs.netlify.com/forms/setup/) flow.
+- After the first successful deploy, open **Site configuration → Forms** and confirm the **contact** form appears.
+- Configure **notifications** (e.g. email) so submissions reach the right inbox. Spam filtering can include the built-in honeypot field; add reCAPTCHA in the Netlify UI if you need more protection.
+
+### SPA routing
+
+`netlify.toml` includes a **`/*` → `/index.html`** rewrite (status **200**) so client-side routing keeps working if you add more routes later.
+
+## Project layout (high level)
+
+| Path | Role |
+|------|------|
+| `index.html` | Shell, fonts, **Netlify form stub** for `contact` |
+| `public/` | Static assets served as-is (e.g. `logo.png` at `/logo.png`) |
+| `src/` | React app (`App.tsx`, components, styles) |
+| `netlify.toml` | Netlify build, publish, and redirects |
+| `dist/` | Production build output (generated; not committed) |
+
+## Brand assets
+
+- **Logo (infinity mark):** `logo.png` (repo root) — copy kept in sync under **`public/logo.png`** for the live site.
+- **`_brand_extract.png`** — full splash / reference graphic in the repo root (optional for design reference).

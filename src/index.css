@@ -1,19 +1,34 @@
 :root {
-  --bg-deep: #030712;
-  --bg-elevated: #0c1222;
-  --bg-card: rgba(12, 18, 34, 0.72);
-  --border-subtle: rgba(200, 205, 212, 0.12);
-  --text-primary: #f4f6fb;
-  --text-muted: rgba(228, 232, 240, 0.72);
-  --text-faint: rgba(228, 232, 240, 0.48);
-  --silver-from: #e8ecf2;
-  --silver-mid: #a8b0bd;
-  --silver-to: #6b7280;
-  --gold-from: #f0d78c;
-  --gold-mid: #c9a227;
-  --gold-to: #7a5c1e;
-  --glow-gold: rgba(201, 162, 39, 0.22);
-  --glow-silver: rgba(200, 210, 225, 0.12);
+  /* Brand palette */
+  --brand-deep: #1f4e9d;
+  --brand-royal: #2e6cc4;
+  --brand-sky: #4fa3d9;
+  --brand-teal: #3bb3b0;
+  --brand-green: #5bc08a;
+  --color-lynq: #2b3a55;
+  --color-beyond: #4fa3d9;
+  --shadow-soft: #8fa3b5;
+  --bg-light: #afcfe6;
+  --bg-tint: #dceaf5;
+
+  --bg-deep: var(--bg-light);
+  --bg-elevated: #e8f2fa;
+  /* Panels: clearly blue-gray vs page (not white) — tint family #DCEAF5 */
+  --bg-card: linear-gradient(165deg, #e2edf8 0%, #d2e3f3 42%, #c8daf0 100%);
+  --bg-card-solid: #d8e6f4;
+  --border-subtle: rgba(43, 58, 85, 0.14);
+  --text-primary: var(--color-lynq);
+  --text-muted: rgba(43, 58, 85, 0.72);
+  --text-faint: rgba(43, 58, 85, 0.48);
+  /* Legacy gradient names → brand (for gradual App.css compatibility) */
+  --silver-from: var(--color-lynq);
+  --silver-mid: #3d5270;
+  --silver-to: var(--color-beyond);
+  --gold-from: var(--brand-sky);
+  --gold-mid: var(--brand-royal);
+  --gold-to: var(--brand-deep);
+  --glow-gold: rgba(46, 108, 196, 0.22);
+  --glow-silver: rgba(79, 163, 217, 0.18);
   --radius-lg: 20px;
   --radius-md: 12px;
   --font-display: "Montserrat", system-ui, sans-serif;
@@ -29,11 +44,15 @@
 
 html {
   scroll-behavior: smooth;
+  /* Same tone as page top so overscroll / rubber-band does not flash a mismatched strip */
+  background: var(--bg-tint);
+  overscroll-behavior-y: none;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  overscroll-behavior-y: none;
   font-family: var(--font-body);
   font-optical-sizing: auto;
   font-size: 1.0625rem;
@@ -41,9 +60,10 @@ body {
   color: var(--text-primary);
   background: var(--bg-deep);
   background-image:
-    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 162, 39, 0.09), transparent 55%),
-    radial-gradient(ellipse 80% 50% at 100% 50%, rgba(96, 112, 140, 0.06), transparent 45%),
-    linear-gradient(180deg, #050a18 0%, var(--bg-deep) 35%, #02040c 100%);
+    radial-gradient(ellipse 100% 80% at 50% 0%, var(--bg-tint) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 100% 30%, rgba(175, 207, 230, 0.65) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 0% 80%, rgba(220, 234, 245, 0.9) 0%, transparent 45%),
+    linear-gradient(180deg, var(--bg-tint) 0%, var(--bg-light) 40%, #c5dff0 100%);
 }
 
 body::before {
@@ -51,7 +71,7 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.22;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
   z-index: 0;
 }
@@ -71,7 +91,7 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold-mid);
+  outline: 2px solid var(--brand-royal);
   outline-offset: 3px;
 }
 

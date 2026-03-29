@@ -25,7 +25,7 @@ export function Header() {
           ))}
         </ul>
       </nav>
-      <a className="btn btn--primary site-header__cta" href="mailto:contact@lynqbeyond.com">
+      <a className="btn btn--primary site-header__cta" href="mailto:deeyapatel0007@gmail.com">
         Email us
       </a>
     </header>
